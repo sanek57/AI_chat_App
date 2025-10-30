@@ -1,2 +1,4 @@
 - npm install tailwindcss @tailwindcss/vite
 - npm install --save-dev --save-exact prettier
+- npm i react-router-dom
+- npm i @types/react-router
