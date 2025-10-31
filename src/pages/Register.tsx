@@ -1,15 +1,36 @@
 // node modules
+import { Link, Form, useNavigation, useActionData } from 'react-router'
 
 // components
-import { Link } from 'react-router-dom'
 import { PageTitle } from '../components/PageTitle'
 import { TextField } from '../components/TextField'
+import { Button } from '../components/Button'
 
 // assets
 import { banner, logoDark, logoLight } from '../assets/assets'
-import { Button } from '../components/Button'
+import { CircularProgress } from '../components/Progress'
+import { useEffect } from 'react'
+import { useSnackbar } from '../hooks/useSnackbar'
+
+// custom hoohs
 
 export const Register = () => {
+  // ошибки с формы
+  const error = useActionData()
+  // состояние запроса формы
+  const navigation = useNavigation()
+
+  const { showSnackbar } = useSnackbar()
+
+  useEffect(() => {
+    if (error?.message) {
+      showSnackbar({
+        message: error.message,
+        type: 'error',
+      })
+    }
+  }, [error, showSnackbar])
+
   return (
     <>
       <PageTitle title='Create an account' />
@@ -45,10 +66,9 @@ export const Register = () => {
               susercharge your ideas
             </p>
 
-            <form
+            <Form
               method='POST'
               className='grid grid-cols-1 gap-4'
-              action='/'
             >
               <TextField
                 classes=''
@@ -77,8 +97,17 @@ export const Register = () => {
                 required={true}
               />
 
-              <Button type='submit'>Create account</Button>
-            </form>
+              <Button
+                type='submit'
+                disabled={navigation.state === 'submitting'}
+              >
+                {navigation.state === 'submitting' ? (
+                  <CircularProgress size='small' />
+                ) : (
+                  'Create account'
+                )}
+              </Button>
+            </Form>
 
             <p className='text-body-medium text-light-on-surface-variant dark:text-dark-on-surface-variant text-center mt-4'>
               Already have an account?
