@@ -1,10 +1,11 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { AppRouter } from './components/AppRouter'
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes'
+import { SnackbarProvider } from './components/SnackbarProvider'
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <AppRouter />
-  </BrowserRouter>,
+  <SnackbarProvider>
+    <RouterProvider router={router} />
+  </SnackbarProvider>
 )
