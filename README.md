@@ -2,3 +2,4 @@
 - npm install --save-dev --save-exact prettier
 - npm i react-router-dom
 - npm i @types/react-router
+- npm install motion

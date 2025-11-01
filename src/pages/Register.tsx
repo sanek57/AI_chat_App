@@ -8,9 +8,10 @@ import { Button } from '../components/Button'
 
 // assets
 import { banner, logoDark, logoLight } from '../assets/assets'
-import { CircularProgress } from '../components/Progress'
+import { CircularProgress, LinearProgress } from '../components/Progress'
 import { useEffect } from 'react'
 import { useSnackbar } from '../hooks/useSnackbar'
+import { AnimatePresence } from 'motion/react'
 
 // custom hoohs
 
@@ -137,6 +138,10 @@ export const Register = () => {
           </p>
         </div>
       </div>
+
+      <AnimatePresence>
+        <LinearProgress classes='absolute top-0 left-0 right-0' />
+      </AnimatePresence>
     </>
   )
 }
