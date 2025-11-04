@@ -140,7 +140,9 @@ export const Register = () => {
       </div>
 
       <AnimatePresence>
-        <LinearProgress classes='absolute top-0 left-0 right-0' />
+        {navigation.state === 'loading' && (
+          <LinearProgress classes='absolute top-0 left-0 right-0' />
+        )}
       </AnimatePresence>
     </>
   )
