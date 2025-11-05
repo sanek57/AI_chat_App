@@ -7,20 +7,19 @@ export const resetPasswordAction = async ({
   request,
 }: ActionFunctionArgs<any>): Promise<Response | IResponseMy> => {
   const formData = await request.formData()
+  const url = new URL(request.url)
+
   try {
-    await account.createRecovery(
-      formData.get('email'),
-      `${location.origin}/reset-password`,
+    await account.updateRecovery(
+        url.searchParams.get('userId'),
+        url.searchParams.get('secret'),
+        formData.get('password')
     )
-    return {
-      ok: true,
-      message:
-        'You will recive a password reset link shortly. Please check your email and follow the instructions to reset your password.',
-    }
+    return redirect('/login')
   } catch (e) {
     return {
       ok: false,
-      message: `Error getting password reset link: ${e}`,
+      message: `Error updating password: ${e}`,
     }
   }
 }
