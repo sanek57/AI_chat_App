@@ -4,7 +4,7 @@ import { redirect } from 'react-router'
 // custom modules
 import { account } from '../../../../appWriter/src/lib/appwrite'
 
-export const registerLoader = async (): Promise<Response | null> => {
+export const resetLinkLoader = async (): Promise<Response | null> => {
   try {
     await account.get()
   } catch (error) {
@@ -12,5 +12,6 @@ export const registerLoader = async (): Promise<Response | null> => {
 
     return null
   }
+
   return redirect('/')
 }

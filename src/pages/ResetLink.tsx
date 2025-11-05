@@ -15,27 +15,26 @@ import { AnimatePresence } from 'motion/react'
 
 // custom hooks
 
-export const ResetPassword = () => {
-  // ошибки с формы
-  const error = useActionData()
+export const ResetLink = () => {
+  const actionData = useActionData()
   // состояние запроса формы
   const navigation = useNavigation()
 
   const { showSnackbar } = useSnackbar()
-
+  
   useEffect(() => {
-    if (error?.message) {
+    if (actionData) {
       showSnackbar({
-        message: error.message,
-        type: 'error',
+        message: actionData.message,
+        type: actionData.ok ? 'info' : 'error',
         timeout: 8000
       })
     }
-  }, [error, showSnackbar])
+  }, [actionData, showSnackbar])
 
   return (
     <>
-      <PageTitle title='New password' />
+      <PageTitle title='Reset password' />
 
       <div className='relative w-screen h-dvh p-2 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] lg:gap-2'>
         <div className='flex flex-col p-4'>
@@ -61,11 +60,10 @@ export const ResetPassword = () => {
 
           <div className='flex flex-col gap-2 max-w-[480px] w-full mx-auto'>
             <h2 className='text-display-small font-semibold text-light-onbackground dark:text-dark-onbackground text-center'>
-              Set a new password
+               Forgot your password?
             </h2>
             <p className='text-body-large text-light-on-surface-variant dark:text-dark-on-surface-variant mt-1 text-center px-2'>
-              Please choose a password that has&apos;t been used before. Must be
-              at least 8 characters.
+              Enter your email and we&apos;ll send a password reset link.
             </p>
 
             <Form
@@ -74,12 +72,13 @@ export const ResetPassword = () => {
             >
               <TextField
                 classes=''
-                type={'password'}
-                name='password'
-                label='Password'
-                placeholder='New password'
-                autoFocus={true}
+                type={'email'}
+                name='email'
+                label='Email'
+                placeholder='Email'
+                tooltip='The verification link sent to your email address will be vaild 1 hour.'
                 required={true}
+                autoFocus={true}
               />
 
               <Button
@@ -89,7 +88,7 @@ export const ResetPassword = () => {
                 {navigation.state === 'submitting' ? (
                   <CircularProgress size='small' />
                 ) : (
-                  'Reset password'
+                  'Get link'
                 )}
               </Button>
             </Form>
