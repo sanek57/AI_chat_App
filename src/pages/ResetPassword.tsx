@@ -13,28 +13,28 @@ import { useEffect } from 'react'
 import { useSnackbar } from '../hooks/useSnackbar'
 import { AnimatePresence } from 'motion/react'
 
-// custom hoohs
+// custom hooks
 
-export const Register = () => {
-  // ошибки с формы
-  const error = useActionData()
+export const ResetPassword = () => {
+  const actionData = useActionData()
   // состояние запроса формы
   const navigation = useNavigation()
 
   const { showSnackbar } = useSnackbar()
-
+  
   useEffect(() => {
-    if (error?.message) {
+    if (actionData) {
       showSnackbar({
-        message: error.message,
-        type: 'error',
+        message: actionData.message,
+        type: actionData.ok ? 'info' : 'error',
+        timeout: 8000
       })
     }
-  }, [error, showSnackbar])
+  }, [actionData, showSnackbar])
 
   return (
     <>
-      <PageTitle title='Create an account' />
+      <PageTitle title='Reset password' />
 
       <div className='relative w-screen h-dvh p-2 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] lg:gap-2'>
         <div className='flex flex-col p-4'>
@@ -60,11 +60,10 @@ export const Register = () => {
 
           <div className='flex flex-col gap-2 max-w-[480px] w-full mx-auto'>
             <h2 className='text-display-small font-semibold text-light-onbackground dark:text-dark-onbackground text-center'>
-              Create account
+               Forgot your password?
             </h2>
             <p className='text-body-large text-light-on-surface-variant dark:text-dark-on-surface-variant mt-1 text-center px-2'>
-              Register today and again access powerful tools that will
-              susercharge your ideas
+              Enter your email and we&apos;ll send a password reset link.
             </p>
 
             <Form
@@ -73,29 +72,13 @@ export const Register = () => {
             >
               <TextField
                 classes=''
-                type={'text'}
-                name='name'
-                label='Full name'
-                placeholder='Full name'
-                required={true}
-                autoFocus={true}
-                // tooltip='some tooltip'
-              />
-              <TextField
-                classes=''
                 type={'email'}
                 name='email'
                 label='Email'
                 placeholder='Email'
+                tooltip='The verification link sent to your email address will be vaild 1 hour.'
                 required={true}
-              />
-              <TextField
-                classes=''
-                type={'password'}
-                name='password'
-                label='Password'
-                placeholder='Enter yout password'
-                required={true}
+                autoFocus={true}
               />
 
               <Button
@@ -105,20 +88,10 @@ export const Register = () => {
                 {navigation.state === 'submitting' ? (
                   <CircularProgress size='small' />
                 ) : (
-                  'Create account'
+                  'Get link'
                 )}
               </Button>
             </Form>
-
-            <p className='text-body-medium text-light-on-surface-variant dark:text-dark-on-surface-variant text-center mt-4'>
-              Already have an account?
-              <Link
-                to={'/login'}
-                className='link text-label-large inline-block ms-1 text-light-on-surface dark:text-dark-on-surface'
-              >
-                Sign in
-              </Link>
-            </p>
           </div>
 
           <p className='mt-auto mx-auto text-light-on-surface-variant dark:text-dark-on-surface-variant text-body-medium lg:mx-0'>
