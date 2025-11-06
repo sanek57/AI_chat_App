@@ -1,7 +1,7 @@
 import { redirect } from 'react-router'
 
 // custom modules
-import { account } from '../../../../appWriter/src/lib/appWriter'
+import { account } from '../../lib/appwrite'
 
 export const appLoader = async (): Promise<Response | any> => {
   const data = {

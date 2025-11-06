@@ -1,7 +1,7 @@
 import React, { type FC } from 'react'
 
 // custom modules
-import { avatars } from '../../../appWriter/src/lib/appwrite'
+import { avatars } from '../lib/appwrite'
 
 interface AvatarProps {
   name: string
