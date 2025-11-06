@@ -1,13 +1,14 @@
 // node modules
-import { Link, Form, useNavigation, useActionData } from 'react-router'
+import { Form, useNavigation, useActionData } from 'react-router'
 
 // components
 import { PageTitle } from '../components/PageTitle'
 import { TextField } from '../components/TextField'
 import { Button } from '../components/Button'
+import { Logo } from '../components/Logo'
 
 // assets
-import { banner, logoDark, logoLight } from '../assets/assets'
+import { banner } from '../assets/assets'
 import { CircularProgress, LinearProgress } from '../components/Progress'
 import { useEffect } from 'react'
 import { useSnackbar } from '../hooks/useSnackbar'
@@ -28,7 +29,7 @@ export const ResetPassword = () => {
       showSnackbar({
         message: error.message,
         type: 'error',
-        timeout: 8000
+        timeout: 8000,
       })
     }
   }, [error, showSnackbar])
@@ -39,25 +40,7 @@ export const ResetPassword = () => {
 
       <div className='relative w-screen h-dvh p-2 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] lg:gap-2'>
         <div className='flex flex-col p-4'>
-          <Link
-            to={'/'}
-            className='max-w-max mb-auto mx-auto lg:mx-0'
-          >
-            <img
-              src={logoLight}
-              width={123}
-              height={24}
-              alt='mavdeep'
-              className='dark:hidden'
-            />
-            <img
-              src={logoDark}
-              alt='mavdeep'
-              width={123}
-              height={24}
-              className='hidden dark:block'
-            />
-          </Link>
+          <Logo classes='mb-auto mx-auto lg:mx-0' />
 
           <div className='flex flex-col gap-2 max-w-[480px] w-full mx-auto'>
             <h2 className='text-display-small font-semibold text-light-onbackground dark:text-dark-onbackground text-center'>
@@ -68,10 +51,7 @@ export const ResetPassword = () => {
               at least 8 characters.
             </p>
 
-            <Form
-              method='POST'
-              className='grid grid-cols-1 gap-4'
-            >
+            <Form method='POST' className='grid grid-cols-1 gap-4'>
               <TextField
                 classes=''
                 type={'password'}
@@ -101,11 +81,7 @@ export const ResetPassword = () => {
         </div>
 
         <div className='hidden img-box lg:block lg:relative lg:rounded-large lg:overflow-hidden'>
-          <img
-            src={banner}
-            alt='banner'
-            className='img-cover'
-          />
+          <img src={banner} alt='banner' className='img-cover' />
 
           <p className='absolute bottom-10 left-12 z-10 text-display-large font-semibold leading-tight text-right text-light-on-surface drop-shadow-sm 2xl:text-[72px]'>
             Chat with Mavdeep to susercharge your ideas.
