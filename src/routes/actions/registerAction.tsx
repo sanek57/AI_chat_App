@@ -22,17 +22,17 @@ export const registerAction = async ({
     }
   }
 
-  // после успешной аутентифкации - делаем сессию пользователю по почте и паролю
-  try {
-    await account.createEmailPasswordSession(
-      formData.get('email'),
-      formData.get('password'),
-    )
-    return redirect('/login')
-  } catch (e) {
-    return {
-      ok: false,
-      message: `Error creating user session: ${e}`,
-    }
-  }
+  // // после успешной аутентифкации - делаем сессию пользователю по почте и паролю
+  // try {
+  //   await account.createEmailPasswordSession(
+  //     formData.get('email'),
+  //     formData.get('password'),
+  //   )
+  //   return redirect('/login')
+  // } catch (e) {
+  //   return {
+  //     ok: false,
+  //     message: `Error creating user session: ${e}`,
+  //   }
+  // }
 }
