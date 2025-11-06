@@ -26,3 +26,4 @@ dist-ssr
 .vite
 .prettier*
 .eslintrc.js
+.vscode

@@ -15,8 +15,13 @@ import { LinearProgress } from './Progress'
 // hooks
 import { useToggle } from '../hooks/useToggle'
 import { logout } from '../utils/logout'
+import type { FC } from 'react'
 
-export const TopAppBar = () => {
+interface TopAppBarProps {
+  toggleSidebar: () => void
+}
+
+export const TopAppBar: FC<TopAppBarProps> = ({ toggleSidebar }) => {
   const navigation = useNavigation()
   const navigate = useNavigate()
 
@@ -29,7 +34,7 @@ export const TopAppBar = () => {
   return (
     <header className='relative flex justify-between items-center h-16 px-4'>
       <div className='flex items-center gap-1'>
-        <IconButton icon='menu' classes='lg:hidden' />
+        <IconButton icon='menu' classes='lg:hidden' onClick={toggleSidebar} />
 
         <Logo classes='lg:hidden' />
       </div>
