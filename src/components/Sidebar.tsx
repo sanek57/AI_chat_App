@@ -1,0 +1,70 @@
+// node modules
+import { NavLink } from 'react-router'
+// components
+import { ExtendedFab, IconButton } from './Button'
+import { Logo } from './Logo'
+import type { FC } from 'react'
+
+interface SidebarProps {
+  isSidebarOpen: boolean
+  toggleSideBar: () => void
+}
+
+export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
+  return (
+    <>
+      <div className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
+        <div className='sidebar-inner'>
+          <div className='h-16 grid items-center px-4 mb-4'>
+            <Logo />
+          </div>
+          <ExtendedFab
+            text='New chat'
+            href='/'
+            classes=''
+            onClick={toggleSideBar}
+          />
+
+          <div className='overflow-y-auto -me-2 pe-1'>
+            <p className='text-title-small h-9 grid items-center px-4'>
+              Recent
+            </p>
+
+            <nav>
+              <div className='relative group'>
+                <NavLink
+                  to={''}
+                  className='nav-link'
+                  title=''
+                  onClick={toggleSideBar}
+                >
+                  <span className='material-symbols-rounded icon-small'>
+                    chat_bubble
+                  </span>
+                  <span className='truncate'>New conversation</span>
+                  <div className='state-layer'></div>
+                </NavLink>
+
+                <IconButton
+                  icon='delete'
+                  size='small'
+                  classes='absolute top-1/2 right-1.5 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 group:focus-within:opacity-100 hidden lg:grid'
+                  title='Delete'
+                />
+              </div>
+            </nav>
+          </div>
+
+          <div className='mt-4 h-14 px-4 grid items-center text-label-large text-light-on-surface-variant dark:text-dark-on-surface-variant border-t border-light-surface-container-high dark:border-dark-surface-container-high truncate'>
+            &copy; 2025 sanekofblack
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`overlay ${isSidebarOpen ? 'active' : ''}`}
+        onClick={toggleSideBar}
+      ></div>
+    </>
+  )
+}

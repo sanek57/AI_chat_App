@@ -66,7 +66,19 @@
   }
 
   .menu-item {
-    --state-layer-bg: theme('colors.dark.onSurface')
+    --state-layer-bg: theme('colors.dark.onSurface');
+  }
+
+  .extended-fab {
+    --state-layer-bg: theme('colors.dark.onPrimaryContainer');
+  }
+
+  .nav-link {
+    --state-layer-bg: theme('colors.dark.onSurfaceVariant');
+  }
+
+   .nav-link.active {
+    --state-layer-bg: theme('colors.dark.onSecondaryContainer');
   }
 }
 
@@ -75,6 +87,7 @@
 */
 
 @layer components {
+
   /* text fileld */
 
   .text-field-wrapper {
@@ -110,6 +123,7 @@
   }
 
   /* дефолтное отображение label */
+
   .label-text {
     @apply absolute
     text-label-large
@@ -227,9 +241,9 @@
     @apply text-[30px]!;
   }
 
-  /* state layer */
+  /* State layer */
 
-  /* выбирвем класс - если он содержит указанного прямого потомка */
+  /* выбираем класс - если он содержит указанного прямого потомка */
   :has(> .state-layer) {
     @apply relative
     overflow-hidden
@@ -247,7 +261,8 @@
     -z-10;
   }
 
-  /* если родительский элемент содержит - прямого потомка .state-layer при hover - то примеяем стиль к потомку */
+  /* если родительский элемент содержит - прямого потомка .state-layer
+   - то при hover на родителе - примеяем стиль к потомку */
   :has(> .state-layer):hover > .state-layer {
     @apply opacity-50;
   }
@@ -259,6 +274,7 @@
   }
 
   /* Link */
+
   .link {
     @apply transition-colors duration-short3 ease-standard
 
@@ -268,6 +284,7 @@
   }
 
   /* Porgress */
+
   .circular-progress {
     @apply border-4
     border-current
@@ -307,6 +324,7 @@
   }
 
   /* Snackbar */
+
   .snackbar {
     @apply fixed
     bottom-4
@@ -394,7 +412,151 @@
     w-full
     flex
     items-center
+    px-3;
+  }
+
+  /* Sidebar */
+
+  .sidebar {
+    @apply bg-light-surface-container-low
+    dark:bg-dark-surface-container-low
+    text-light-on-surface
+    dark:text-dark-on-surface
+    fixed
+    top-0
+    left-0
+    h-dvh
+    w-0
+    max-w-[80vw]
+    rounded-e-large
+    shadow-elevation1
+    overflow-hidden
+    transition-[width]
+    duration-short4
+    ease-emphasized
+    z-40
+
+    /* responsive for sm */
+    sm:max-w-[320px]
+
+    /* responsive for lg */
+    lg:static
+    lg:opacity-100
+    lg:visible
+    lg:w-full
+    lg:shadow-none
+    lg:rounded-none;
+  }
+
+  .sidebar.active {
+    @apply w-[80vw]
+    duration-medium2
+    ease-standard-decelerate
+    
+    /* responsive for sm */
+    sm:w-[320px];
+  }
+
+  .sidebar-inner {
+    @apply h-full
+    grid
+    /* высота строки исходя из максимального размера каждого дочернего компонента */
+    grid-rows-[max-content_max-content_1fr_max-content]
+    grid-cols-1
     px-3
+    opacity-0
+    transition-opacity
+    duration-medium2
+
+    /* responsive for sm */
+    lg:opacity-100;
+  }
+
+  .sidebar.active .sidebar-inner {
+    @apply opacity-100
+    delay-short2;
+  }
+
+  /* Overlay */
+
+  .overlay {
+    @apply fixed
+    top-0
+    left-0
+    w-full
+    h-dvh
+    z-20
+    bg-transparent
+    invisible
+    transition-colors
+
+    /* responsive for lg */
+    lg:hidden;
+  }
+
+  .overlay.active {
+    @apply bg-black/40
+    visible;
+  }
+
+  /* Extended FAB */
+
+  .extended-fab {
+    --state-layer-bg: theme('colors.light.onPrimaryContainer');
+    @apply bg-light-primary-container
+    dark:bg-dark-primary-container
+    text-light-on-primary-container
+    dark:text-dark-on-primary-container
+    text-label-large
+    max-w-max
+    flex
+    items-center
+    gap-2
+    h-14
+    ps-3
+    pe-4
+    rounded-large
+    shadow-elevation1
+    transition-shadow
+    duration-short3
+    ease-standard
+
+    hover:shadow-elevation2
+
+    focus:shadow-elevation1;
+  }
+
+  .extended-fab[disabled] {
+    @apply bg-light-on-surface/12
+    dark:bg-dark-on-surface/12
+    text-light-on-surface/38
+    dark:text-dark-on-surface/38
+    shadow-none
+    pointer-events-none;
+  }
+
+  /* Navlink */
+
+  .nav-link {
+    --state-layer-bg: theme('colors.light.onSurfaceVariant');
+    @apply flex
+    items-center
+    gap-3
+    text-label-large
+    text-light-on-surface-variant
+    dark:text-dark-on-surface-variant
+    h-9
+    rounded-full
+    ps-4
+    pe-10;
+  }
+
+  .nav-link.active {
+    --state-layer-bg: theme('colors.light.onSecondaryContainer');
+    @apply bg-light-secondary-container
+    dark:bg-dark-secondary-container
+    text-light-on-secondary-container
+    dark:text-dark-on-secondary-container;
   }
 }
 
@@ -426,5 +588,9 @@
     h-[1em]
     min-h-[1em]
     overflow-hidden;
+  }
+
+  .icon-small {
+    @apply text-[18px]!
   }
 }
