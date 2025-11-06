@@ -1,7 +1,7 @@
 import type { IResponseMy } from '..'
 // custom modules
 import { redirect, type ActionFunctionArgs } from 'react-router'
-import { account } from '../../../../appWriter/src/lib/appwrite'
+import { account } from '../../lib/appwrite'
 
 export const loginAction = async ({
   request,

@@ -2,7 +2,7 @@
 import { redirect } from 'react-router'
 
 // custom modules
-import { account } from '../../../../appWriter/src/lib/appwrite'
+import { account } from '../../lib/appwrite'
 
 export const resetLinkLoader = async (): Promise<Response | null> => {
   try {

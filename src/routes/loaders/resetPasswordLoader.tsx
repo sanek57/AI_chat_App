@@ -2,7 +2,7 @@
 import { redirect, type ActionFunctionArgs } from 'react-router'
 
 // custom modules
-import { account } from '../../../../appWriter/src/lib/appwrite'
+import { account } from '../../lib/appwrite'
 
 export const resetPasswordLoader = async ({
   request,

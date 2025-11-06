@@ -21,7 +21,6 @@ export const TopAppBar = () => {
   const navigate = useNavigate()
 
   const {user} = useLoaderData()
-  console.log(user);
 
   const isNormalLoading = navigation.state === 'loading' && navigation.formData
 

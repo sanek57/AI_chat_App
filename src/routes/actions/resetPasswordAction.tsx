@@ -1,6 +1,6 @@
 // custom modules
 import { redirect, type ActionFunctionArgs } from 'react-router'
-import { account } from '../../../../appWriter/src/lib/appwrite'
+import { account } from '../../lib/appwrite'
 import type { IResponseMy } from '..'
 
 export const resetPasswordAction = async ({
