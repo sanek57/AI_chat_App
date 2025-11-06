@@ -14,6 +14,7 @@ export const loginAction = async ({
     )
     return redirect('/')
   } catch (e) {
+    console.log(e);
     return {
       ok: false,
       message: `Error creating user session: ${e}`,

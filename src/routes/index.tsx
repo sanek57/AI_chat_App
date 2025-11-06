@@ -19,6 +19,7 @@ import { registerLoader } from './loaders/registerLoader'
 import { loginLoader } from './loaders/loginLoader'
 import { resetLinkLoader } from './loaders/resetLinkLoader'
 import { resetPasswordLoader } from './loaders/resetPasswordLoader'
+import { appLoader } from './loaders/appLoader'
 
 export interface IResponseMy {
   ok?: boolean
@@ -26,7 +27,7 @@ export interface IResponseMy {
 }
 
 export const router = createBrowserRouter([
-  { path: '/', element: <App /> },
+  { path: '/', element: <App />, loader: appLoader },
   {
     path: '/register',
     element: <Register />,

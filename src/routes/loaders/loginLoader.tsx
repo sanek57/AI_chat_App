@@ -7,11 +7,10 @@ export const loginLoader = async (): Promise<Response | null> => {
   try {
     const user = await account.get()
     console.log(user)
+    return redirect('/')
   } catch (error) {
     console.log(`Error getting user session: ${error}`)
 
     return null
   }
-
-  return redirect('/')
 }
