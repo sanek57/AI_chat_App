@@ -1,4 +1,5 @@
 // node modules
+import { motion, type HTMLMotionProps } from 'motion/react'
 import React, { type FC } from 'react'
 import { Link } from 'react-router'
 
@@ -28,7 +29,9 @@ export const Button: FC<ButtonProps> = ({
   )
 }
 
-export const IconButton: FC<ButtonProps> = ({
+type IconButtonProps = ButtonProps & HTMLMotionProps<'button'> 
+
+export const IconButton: FC<IconButtonProps> = ({
   classes,
   icon,
   size,
@@ -36,14 +39,14 @@ export const IconButton: FC<ButtonProps> = ({
   ...rest
 }) => {
   return (
-    <button className={`icon-btn ${size} ${classes}`} {...rest}>
+    <motion.button className={`icon-btn ${size} ${classes}`} {...rest}>
       {children}
 
       {!children && (
         <span className='material-symbols-rounded icon'>{icon}</span>
       )}
       <div className='state-layer'></div>
-    </button>
+    </motion.button>
   )
 }
 
