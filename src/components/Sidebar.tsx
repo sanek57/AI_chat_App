@@ -1,5 +1,7 @@
 // node modules
 import { NavLink } from 'react-router'
+import { motion } from 'motion/react'
+
 // components
 import { ExtendedFab, IconButton } from './Button'
 import { Logo } from './Logo'
@@ -13,7 +15,11 @@ interface SidebarProps {
 export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
   return (
     <>
-      <div className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
+      <motion.div 
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      transition={{duration: 0.2, ease: 'easeOut'}}
+      className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
         <div className='sidebar-inner'>
           <div className='h-16 grid items-center px-4 mb-4'>
             <Logo />
@@ -59,7 +65,7 @@ export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
             &copy; 2025 sanekofblack
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div
         className={`overlay ${isSidebarOpen ? 'active' : ''}`}
