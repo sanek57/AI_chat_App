@@ -77,8 +77,12 @@
     --state-layer-bg: theme('colors.dark.onSurfaceVariant');
   }
 
-   .nav-link.active {
+  .nav-link.active {
     --state-layer-bg: theme('colors.dark.onSecondaryContainer');
+  }
+
+  .prompt-field-container {
+    --state-layer-bg: theme('colors.dark.onSurfaceVariant');
   }
 }
 
@@ -87,7 +91,6 @@
 */
 
 @layer components {
-
   /* text fileld */
 
   .text-field-wrapper {
@@ -558,6 +561,45 @@
     text-light-on-secondary-container
     dark:text-dark-on-secondary-container;
   }
+
+  /* Prompt field */
+
+  .prompt-field-container {
+    --state-layer-bg: theme('colors.light.onSurfaceVariant');
+    @apply bg-light-surface-container
+    dark:bg-dark-surface-container
+    min-h-16
+    rounded-full
+    flex
+    items-end
+    flex-wrap
+    p-2
+    cursor-text;
+  }
+
+  .prompt-field {
+    @apply text-light-on-surface
+    dark:text-dark-on-surface
+    text-body-large
+    relative
+    outline-none
+    grow
+    mx-4
+    py-3
+    max-h-[230px]
+    overflow-y-auto
+    whitespace-pre-wrap
+
+    /* ::after */
+    after:content-[attr(data-placeholder)]
+    after:text-light-on-surface-variant/90
+    after:dark:text-dark-on-surface-variant/90
+    after:absolute
+    after:left-0
+    after:top-1/2
+    after:-translate-y-1/2
+    after:pointer-events-none;
+  }
 }
 
 /* 
@@ -591,6 +633,6 @@
   }
 
   .icon-small {
-    @apply text-[18px]!
+    @apply text-[18px]!;
   }
 }
