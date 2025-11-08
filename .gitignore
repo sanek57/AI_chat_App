@@ -27,3 +27,4 @@ dist-ssr
 .prettier*
 .eslintrc.js
 .vscode
+*.env
