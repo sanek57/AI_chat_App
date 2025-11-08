@@ -28,3 +28,4 @@ dist-ssr
 .eslintrc.js
 .vscode
 *.env
+vite.config.ts

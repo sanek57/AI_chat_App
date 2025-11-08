@@ -16,5 +16,7 @@ export const appLoader = async (): Promise<Response | any> => {
     return redirect('/login')
   }
 
+  // получаем данные из БД и запихиваем их в data
+
   return data
 }
