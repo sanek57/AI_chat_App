@@ -25,7 +25,7 @@ export const Login = () => {
   const { showSnackbar } = useSnackbar()
 
   useEffect(() => {
-    if (error?.message) {
+  if (error?.message) {
       showSnackbar({
         message: error.message,
         type: 'error',
