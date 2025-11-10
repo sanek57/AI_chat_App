@@ -25,8 +25,8 @@ export const UserPrompt = ({ text }: { text: string }) => {
 
   return (
     <div
-      className='grid grid-cols-1 items-center
-    py-4 md:grid-cols-[max-content_minmax(0,1fr)] md:gap-5'
+      className='grid grid-cols-1 items-start
+    py-4 md:grid-cols-[max-content_minmax(0,1fr)_max-content] md:gap-5'
     >
       <Avatar name={user?.name} />
       <p

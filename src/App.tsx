@@ -28,7 +28,7 @@ function App() {
           <TopAppBar toggleSidebar={toggleSideBar} />
 
           {/* Greetings or child element of router path */}
-          <div className='px-5 pb-5 flex flex-cols overflow-y-hidden'>
+          <div className='px-5 pb-5 flex flex-cols overflow-y-auto'>
             <div className='max-w-[840px] w-full mx-auto grow'>
               {params.chatId ? <Outlet /> : <Greetings />}
             </div>
