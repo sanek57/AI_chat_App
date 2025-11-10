@@ -600,6 +600,7 @@
     after:-translate-y-1/2
     after:pointer-events-none;
   }
+<<<<<<< HEAD
 
   /* Markdown content */
   .markdown-content {
@@ -703,6 +704,8 @@
   .markdown-content .code-block * {
     @apply bg-inherit!
   }
+=======
+>>>>>>> origin/dev
 }
 
 /* 
