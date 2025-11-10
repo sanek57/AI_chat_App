@@ -27,7 +27,7 @@ export const TopAppBar: FC<TopAppBarProps> = ({ toggleSidebar }) => {
 
   const { user } = useLoaderData()
 
-  const isNormalLoading = navigation.state === 'loading' && navigation.formData
+  const isNormalLoading = navigation.state === 'loading'
 
   const [showMenu, setShowMenu] = useToggle()
 
@@ -51,7 +51,7 @@ export const TopAppBar: FC<TopAppBarProps> = ({ toggleSidebar }) => {
         </Menu>
       </div>
 
-      <AnimatePresence>{isNormalLoading && <LinearProgress />}</AnimatePresence>
+      <AnimatePresence>{isNormalLoading && <LinearProgress classes='absolute top-full left-0 right-0 z-10' />}</AnimatePresence>
     </header>
   )
 }
