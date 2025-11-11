@@ -31,11 +31,14 @@ export interface IResponseMy {
 }
 
 export interface IChat {
-  user_prompt: string
-  ai_response: string
+  id: number
+  title: string
+  user_prompt?: string
+  ai_response?: string
 }
 
 export interface IConversation {
+  id?: number
   title?: string
   chats?: IChat[]
 }

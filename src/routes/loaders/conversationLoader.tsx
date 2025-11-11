@@ -1,5 +1,5 @@
 // node modules
-import { redirect, type Params } from 'react-router'
+import { redirect, type LoaderFunction } from 'react-router'
 
 // custom modules
 import { account } from '../../lib/appwrite'
@@ -7,7 +7,7 @@ import type { IResponseConversation } from '..'
 
 export const conversationLoader = async ({
   params,
-}: Params): Promise<Response | IResponseConversation> => {
+}): Promise<LoaderFunction<any> | Response> => {
   const { chatId } = params
 
   const data: IResponseConversation = {
@@ -25,9 +25,12 @@ export const conversationLoader = async ({
 
   // получаем данные из БД и запихиваем их в data
   data.conversation = {
+    id: 1,
     title: 'Chat 1',
     chats: [
       {
+        id: 1,
+        title: 'My Chat about JS',
         user_prompt: `My something prompt:
          git add .
          git rm --cached vite.config.js
@@ -105,7 +108,6 @@ console.log(greet('Мир'));  // Привет, Мир!
 | Выравнивание: лево | :----: центр | ----: право |
 
 `,
-
       },
     ],
   }

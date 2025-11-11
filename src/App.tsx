@@ -10,15 +10,49 @@ import { motion } from 'motion/react'
 // hooks
 import { useToggle } from './hooks/useToggle'
 import { PromptField } from './components/PromptField'
-import { Outlet, useNavigation, useParams } from 'react-router'
+import { Outlet, useActionData, useNavigation, useParams } from 'react-router'
+import { useSnackbar } from './hooks/useSnackbar'
+import { useEffect, useRef } from 'react'
+import { usePromtPreloader } from './hooks/usePropmtPreload'
 
 function App() {
   const params = useParams()
   const navigation = useNavigation()
+  const actionData = useActionData()
+  const chatHistoryRef = useRef<HTMLDivElement>(null)
 
   const isNormalLoading = navigation.state === 'loading' && !navigation.formData
 
   const [isSidebarOpen, toggleSideBar] = useToggle()
+
+  const { propmtPreloadValue } = usePromtPreloader()
+
+  const { showSnackbar } = useSnackbar()
+
+  // scroll to bottom after get ai response
+  useEffect(() => {
+    const chatHistory = chatHistoryRef.current
+    if (propmtPreloadValue) {
+      chatHistory?.scroll({
+        top: chatHistory.scrollHeight - chatHistory.clientHeight,
+        behavior: 'smooth',
+      })
+    }
+  }, [chatHistoryRef, propmtPreloadValue])
+
+  useEffect(() => {
+    if (!actionData) return
+
+    const data = JSON.parse(String(actionData))
+
+    if (data?.conversationTitle) {
+      showSnackbar({
+        message: `Conversation ${data.conversationTitle} deleted. `,
+        type: 'success',
+        timeout: 2500,
+      })
+    }
+  }, [actionData, showSnackbar])
 
   return (
     <>
@@ -31,7 +65,10 @@ function App() {
           <TopAppBar toggleSidebar={toggleSideBar} />
 
           {/* Greetings or child element of router path */}
-          <div className='px-5 pb-5 flex flex-cols overflow-y-auto'>
+          <div
+            ref={chatHistoryRef}
+            className='px-5 pb-5 flex flex-cols overflow-y-auto'
+          >
             <div className='max-w-[840px] w-full mx-auto grow'>
               {isNormalLoading ? null : params.chatId ? (
                 <Outlet />

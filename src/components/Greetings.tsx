@@ -1,11 +1,12 @@
 // node modules
 import { motion } from 'motion/react'
+import type { IResponseConversation } from '../routes'
 
 // hooks
 import { useLoaderData } from 'react-router'
 
 export const Greetings = () => {
-  const { user } = useLoaderData()
+  const { user } = useLoaderData<IResponseConversation>()
 
   return (
     <div className='grid place-content-center h-full'>

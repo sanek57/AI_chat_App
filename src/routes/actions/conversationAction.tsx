@@ -6,7 +6,7 @@ import type { IChat } from '..'
 export const conversationAction = async ({
   request,
   params,
-}: ActionFunctionArgs<any> & Params<string>): Promise<null> => {
+}: ActionFunctionArgs<any>): Promise<null> => {
   const { chatId } = params
 
   const formData = await request.formData()

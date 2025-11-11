@@ -1,30 +1,33 @@
 // node modules
-import { NavLink } from 'react-router'
+import { NavLink, useLoaderData, useParams, useSubmit } from 'react-router'
 import { motion } from 'motion/react'
 
 // components
 import { ExtendedFab, IconButton } from './Button'
 import { Logo } from './Logo'
 import type { FC } from 'react'
+import type { IChat, IResponseConversation } from '../routes'
+
+// custom
+import { deleteConversation } from '../utils/deleteConversation'
 
 interface SidebarProps {
   isSidebarOpen: boolean
   toggleSideBar: () => void
 }
 
-interface Chat {
-  title: string
-  id: string
-}
-
-const fakeChats: Chat[] = [
-  { title: 'Chat 1', id: '1' },
-  { title: 'Chat 2', id: '2' },
-  { title: 'Chat 3', id: '3' },
-  { title: 'Chat 4', id: '4' },
+const fakeChats: IChat[] = [
+  { title: 'Chat 1', id: 1 },
+  { title: 'Chat 2', id: 2 },
+  { title: 'Chat 3', id: 3 },
+  { title: 'Chat 4', id: 4 },
 ]
 
 export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
+  const { conversation } = useLoaderData<IResponseConversation>()
+  const submit = useSubmit()
+  const {chatId} = useParams()
+
   return (
     <>
       <motion.div
@@ -42,6 +45,7 @@ export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
             href='/'
             classes='mb-4'
             onClick={toggleSideBar}
+            disabled={!chatId}
           />
 
           <div className='overflow-y-auto -me-2 pe-1'>
@@ -50,10 +54,10 @@ export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
             </p>
 
             <nav>
-              {fakeChats.map((item: Chat) => (
-                <div className='relative group' key={item.title}>
+              {fakeChats.map((item: IChat) => (
+                <div className='relative group' key={item.id}>
                   <NavLink
-                    to={item.id}
+                    to={String(item.id)}
                     className='nav-link'
                     title={item.title}
                     onClick={toggleSideBar}
@@ -70,6 +74,15 @@ export const Sidebar: FC<SidebarProps> = ({ isSidebarOpen, toggleSideBar }) => {
                     size='small'
                     classes='absolute top-1/2 right-1.5 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 group:focus-within:opacity-100 hidden lg:grid'
                     title='Delete'
+                    onClick={() => {
+                      if (conversation.chats) {
+                        deleteConversation({
+                          id: item.id,
+                          title: item.title,
+                          submit,
+                        })
+                      }
+                    }}
                   />
                 </div>
               ))}

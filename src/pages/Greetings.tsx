@@ -1,5 +1,6 @@
 // node modules
 import { motion } from 'motion/react'
+import type { IResponseConversation } from '../routes'
 
 // components
 import { PromptPreloader } from '../components/PromptPreloader'
@@ -9,7 +10,7 @@ import { useLoaderData } from 'react-router'
 import { usePromtPreloader } from '../hooks/usePropmtPreload'
 
 export const Greetings = () => {
-  const { user } = useLoaderData()
+  const { user } = useLoaderData<IResponseConversation>()
 
   const { propmtPreloadValue } = usePromtPreloader()
 

@@ -6,9 +6,10 @@ import { useToggle } from '../hooks/useToggle'
 // components
 import { Avatar } from './Avatar'
 import { IconButton } from './Button'
+import type { IResponseConversation } from '../routes'
 
 export const UserPrompt = ({ text }: { text: string }) => {
-  const { user } = useLoaderData()
+  const { user } = useLoaderData<IResponseConversation>()
 
   const [isExpanded, toggleExpanded] = useToggle()
 
