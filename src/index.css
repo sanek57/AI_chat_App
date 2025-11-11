@@ -50,3 +50,703 @@
     dark:bg-dark-onbackground/15;
   }
 }
+
+@theme {
+  /* --state-layer-bg: theme('colors.light.onPrimary'); */
+}
+
+@media (prefers-color-scheme: dark) {
+  /* @theme { */
+  .btn.filled.primary {
+    --state-layer-bg: theme('colors.dark.onPrimary');
+  }
+
+  .icon-btn {
+    --state-layer-bg: theme('colors.dark.onSurfaceVariant');
+  }
+
+  .menu-item {
+    --state-layer-bg: theme('colors.dark.onSurface');
+  }
+
+  .extended-fab {
+    --state-layer-bg: theme('colors.dark.onPrimaryContainer');
+  }
+
+  .nav-link {
+    --state-layer-bg: theme('colors.dark.onSurfaceVariant');
+  }
+
+  .nav-link.active {
+    --state-layer-bg: theme('colors.dark.onSecondaryContainer');
+  }
+
+  .prompt-field-container {
+    --state-layer-bg: theme('colors.dark.onSurfaceVariant');
+  }
+}
+
+/* 
+  COMPONENTS
+*/
+
+@layer components {
+  /* text fileld */
+
+  .text-field-wrapper {
+    @apply relative;
+  }
+
+  .text-field {
+    @apply ring ring-inset
+    ring-light-outline dark:ring-dark-outline
+    bg-inherit
+    text-light-on-surface dark:text-dark-on-surface
+    caret-light-primary dark:caret-light-primary
+    h-14
+    px-4
+    rounded-extra-small
+    transition-shadow duration-short3 ease-linear
+
+    hover:ring-light-on-surface
+    hover:dark:ring-dark-on-surface
+
+    focus:ring-2
+    focus:ring-light-primary
+    focus:dark:ring-dark-primary;
+  }
+
+  .text-field::placeholder {
+    @apply opacity-0
+    transition-opacity;
+  }
+
+  .text-field:focus::placeholder {
+    @apply opacity-100;
+  }
+
+  /* дефолтное отображение label */
+
+  .label-text {
+    @apply absolute
+    text-label-large
+    top-[18px]
+    left-2
+    text-light-on-surface-variant
+    dark:text-dark-on-surface-variant
+    bg-light-background
+    dark:bg-dark-background
+    px-2
+    origin-[center_left]
+    pointer-events-none
+    select-none
+    transition-[color,transform] duration-short4 ease-standard;
+  }
+
+  .text-field-wrapper:hover .label-text {
+    @apply text-light-on-surface
+    dark:text-dark-on-surface;
+  }
+
+  /* условие отображения label над полем ввода */
+  .text-field-wrapper:focus-within .label-text,
+  .text-field-wrapper:has(.text-field:not(:placeholder-shown)) .label-text {
+    @apply translate-x-0.5
+    -translate-y-7
+    scale-[0.85];
+  }
+
+  .text-field-wrapper:focus-within .label-text {
+    @apply text-light-primary
+    dark:text-dark-primary;
+  }
+
+  .text-field-wrapper .helper-text {
+    @apply text-light-on-surface
+    dark:text-dark-on-surface
+    text-body-small
+    px-4
+    pt-1;
+  }
+
+  /* Button */
+
+  .btn {
+    @apply h-10 
+    flex
+    justify-center
+    items-center
+    rounded-full
+    text-label-large
+    px-4
+    transition-shadow duration-short3 ease-standard
+
+    hover:shadow-elevation1
+
+    focus:shadow-none;
+  }
+
+  .btn.filled.primary {
+    --state-layer-bg: theme('colors.light.onPrimary');
+    @apply bg-light-primary
+    dark:bg-dark-primary
+    text-light-on-primary
+    dark:text-dark-on-primary;
+  }
+
+  .btn.filled:disabled {
+    @apply bg-light-on-surface/12
+    dark:bg-dark-on-surface/12
+    text-light-on-surface/38
+    dark:text-dark-on-surface/38
+    /* отключаем взаимдейстиве с пользователем */
+    pointer-events-none;
+  }
+
+  /* Icon button */
+  .icon-btn {
+    --state-layer-bg: theme('colors.light.onSurfaceVariant');
+
+    @apply text-light-on-surface-variant
+    dark:text-dark-on-surface
+    grid
+    place-items-center
+    rounded-full
+    h-10
+    w-10;
+  }
+
+  .icon-btn:disabled {
+    @apply text-light-on-surface-variant/38
+    dark:text-dark-on-surface-variant/38
+    cursor-not-allowed;
+  }
+
+  .icon-btn.small {
+    @apply w-7 
+    h-7
+    min-w-7
+    min-h-7;
+  }
+
+  .icon-btn.small .icon {
+    @apply text-[18px]!;
+  }
+
+  .icon-btn.large {
+    @apply w-12
+    h-12
+    min-w-12
+    min-h-12;
+  }
+
+  .icon-btn.large .icon {
+    @apply text-[30px]!;
+  }
+
+  /* State layer */
+
+  /* выбираем класс - если он содержит указанного прямого потомка */
+  :has(> .state-layer) {
+    @apply relative
+    overflow-hidden
+    isolate;
+  }
+
+  .state-layer {
+    @apply absolute 
+    inset-0
+    bg-(--state-layer-bg)
+    opacity-0
+    transition-opacity duration-short3 ease-standard
+    pointer-events-none
+    select-none
+    -z-10;
+  }
+
+  /* если родительский элемент содержит - прямого потомка .state-layer
+   - то при hover на родителе - примеяем стиль к потомку */
+  :has(> .state-layer):hover > .state-layer {
+    @apply opacity-50;
+  }
+
+  /* тоже самое для фокуса */
+  :has(> .state-layer):where(:focus, :focus-visible, :focus-within)
+    > .state-layer {
+    @apply opacity-10;
+  }
+
+  /* Link */
+
+  .link {
+    @apply transition-colors duration-short3 ease-standard
+
+    hover:text-light-primary
+    hover:dark:text-dark-primary
+    hover:underline;
+  }
+
+  /* Porgress */
+
+  .circular-progress {
+    @apply border-4
+    border-current
+    dark:border-current
+    border-r-transparent
+    dark:border-r-transparent
+    w-12
+    h-12
+    rounded-full
+    animate-spin;
+  }
+
+  .circular-progress.small {
+    @apply border-[3px]
+    w-5
+    h-5;
+  }
+
+  .linear-progress {
+    @apply h-1
+    bg-light-secondary-container
+    dark:bg-dark-secondary-container
+    rounded-full
+    mx-1
+    overflow-hidden
+    origin-top;
+  }
+
+  .linear-progress .active-indicator {
+    @apply h-[inherit]
+    bg-light-primary
+    dark:bg-dark-primary
+    rounded-full
+    origin-right
+
+    -translate-x-full;
+  }
+
+  /* Snackbar */
+
+  .snackbar {
+    @apply fixed
+    bottom-4
+    left-4
+    right-4
+    bg-light-inverse-surface
+    dark:bg-dark-inverse-surface
+    text-light-inverse-on-surface
+    dark:text-dark-inverse-on-surface
+    text-body-medium
+    shadow-elevation3
+    rounded-extra-small
+    min-h-12
+    max-w-[60ch]
+    min-w-[36ch]
+    px-4
+    py-3.5
+    origin-bottom
+    z-40
+
+    sm:left-6
+    sm:right-auto
+    sm:bottom-6
+    sm:w-max;
+  }
+
+  .snackbar.error {
+    @apply bg-light-error-container
+    text-light-on-error-container;
+  }
+
+  /* Avatar */
+
+  .avatar {
+    @apply aspect-square
+    bg-light-surface-container-highest
+    dark:bg-dark-surface-container-highest
+    min-w-8
+    max-w-8
+    overflow-hidden
+    rounded-full;
+  }
+
+  /* Menu */
+
+  .menu-wrapper {
+    @apply relative;
+  }
+
+  .menu {
+    @apply bg-light-surface-container
+    dark:bg-dark-surface-container
+    absolute
+    top-[calc(100%+4px)]
+    /* растягивается от правого края */
+    right-0
+    min-w-28
+    max-w-[280px]
+    py-2
+    rounded-extra-small
+    shadow-elevation2
+    z-20
+    /* якорь откуда идет анимация */
+    origin-top-right
+    scale-75
+    opacity-0
+    invisible
+    transition-[transform,opacity,visibility]
+    duration-short4 ease-standard;
+  }
+
+  .menu.active {
+    @apply scale-100
+    opacity-100
+    visible;
+  }
+
+  .menu-item {
+    --state-layer-bg: theme('colors.light.onSurface');
+
+    @apply text-light-on-surface
+    dark:text-dark-on-surface
+    text-label-large
+    h-12
+    w-full
+    flex
+    items-center
+    px-3;
+  }
+
+  /* Sidebar */
+
+  .sidebar {
+    @apply bg-light-surface-container-low
+    dark:bg-dark-surface-container-low
+    text-light-on-surface
+    dark:text-dark-on-surface
+    fixed
+    top-0
+    left-0
+    h-dvh
+    w-0
+    max-w-[80vw]
+    rounded-e-large
+    shadow-elevation1
+    overflow-hidden
+    transition-[width]
+    duration-short4
+    ease-emphasized
+    z-40
+
+    /* responsive for sm */
+    sm:max-w-[320px]
+
+    /* responsive for lg */
+    lg:static
+    lg:opacity-100
+    lg:visible
+    lg:w-full
+    lg:shadow-none
+    lg:rounded-none;
+  }
+
+  .sidebar.active {
+    @apply w-[80vw]
+    duration-medium2
+    ease-standard-decelerate
+    
+    /* responsive for sm */
+    sm:w-[320px];
+  }
+
+  .sidebar-inner {
+    @apply h-full
+    grid
+    /* высота строки исходя из максимального размера каждого дочернего компонента */
+    grid-rows-[max-content_max-content_1fr_max-content]
+    grid-cols-1
+    px-3
+    opacity-0
+    transition-opacity
+    duration-medium2
+
+    /* responsive for sm */
+    lg:opacity-100;
+  }
+
+  .sidebar.active .sidebar-inner {
+    @apply opacity-100
+    delay-short2;
+  }
+
+  /* Overlay */
+
+  .overlay {
+    @apply fixed
+    top-0
+    left-0
+    w-full
+    h-dvh
+    z-20
+    bg-transparent
+    invisible
+    transition-colors
+
+    /* responsive for lg */
+    lg:hidden;
+  }
+
+  .overlay.active {
+    @apply bg-black/40
+    visible;
+  }
+
+  /* Extended FAB */
+
+  .extended-fab {
+    --state-layer-bg: theme('colors.light.onPrimaryContainer');
+    @apply bg-light-primary-container
+    dark:bg-dark-primary-container
+    text-light-on-primary-container
+    dark:text-dark-on-primary-container
+    text-label-large
+    max-w-max
+    flex
+    items-center
+    gap-2
+    h-14
+    ps-3
+    pe-4
+    rounded-large
+    shadow-elevation1
+    transition-shadow
+    duration-short3
+    ease-standard
+
+    hover:shadow-elevation2
+
+    focus:shadow-elevation1;
+  }
+
+  .extended-fab[disabled] {
+    @apply bg-light-on-surface/12
+    dark:bg-dark-on-surface/12
+    text-light-on-surface/38
+    dark:text-dark-on-surface/38
+    shadow-none
+    pointer-events-none;
+  }
+
+  /* Navlink */
+
+  .nav-link {
+    --state-layer-bg: theme('colors.light.onSurfaceVariant');
+    @apply flex
+    items-center
+    gap-3
+    text-label-large
+    text-light-on-surface-variant
+    dark:text-dark-on-surface-variant
+    h-9
+    rounded-full
+    ps-4
+    pe-10;
+  }
+
+  .nav-link.active {
+    --state-layer-bg: theme('colors.light.onSecondaryContainer');
+    @apply bg-light-secondary-container
+    dark:bg-dark-secondary-container
+    text-light-on-secondary-container
+    dark:text-dark-on-secondary-container;
+  }
+
+  /* Prompt field */
+
+  .prompt-field-container {
+    --state-layer-bg: theme('colors.light.onSurfaceVariant');
+    @apply bg-light-surface-container
+    dark:bg-dark-surface-container
+    min-h-16
+    rounded-full
+    flex
+    items-end
+    flex-wrap
+    p-2
+    cursor-text;
+  }
+
+  .prompt-field {
+    @apply text-light-on-surface
+    dark:text-dark-on-surface
+    text-body-large
+    relative
+    outline-none
+    grow
+    mx-4
+    py-3
+    max-h-[230px]
+    overflow-y-auto
+    whitespace-pre-wrap
+
+    /* ::after */
+    after:content-[attr(data-placeholder)]
+    after:text-light-on-surface-variant/90
+    after:dark:text-dark-on-surface-variant/90
+    after:absolute
+    after:left-0
+    after:top-1/2
+    after:-translate-y-1/2
+    after:pointer-events-none;
+  }
+
+  /* Markdown content */
+  .markdown-content {
+    @apply text-light-on-surface
+    dark:text-dark-on-surface
+    leading-7
+    pt-1;
+  }
+
+  .markdown-content > :first-child {
+    @apply mt-0!;
+  }
+
+  .markdown-content :where(h1, h2, h3, h4, h5, h6) {
+    @apply text-title-medium
+    font-semibold
+    mt-8
+    mb-4;
+  }
+
+  .markdown-content :where(p, pre, table) {
+    @apply my-4;
+  }
+
+  .markdown-content :where(strong, span, a) {
+    @apply inline;
+  }
+
+  .markdown-content :where(ul, ol) {
+    list-style: revert;
+    @apply my-1
+    ps-[18px];
+  }
+
+  .markdown-content code {
+    @apply inline-block
+    text-body-medium
+    text-light-on-surface-variant
+    dark:text-dark-on-surface-variant
+    bg-light-surface-container-high
+    dark:bg-dark-surface-container-high
+    rounded-md
+    py-px
+    px-1.5;
+  }
+
+  .markdown-content strong code {
+    @apply text-light-on-surface
+    dark:text-dark-on-surface
+    font-semibold;
+  }
+
+  .markdown-content pre code {
+    @apply block
+    py-2
+    px-3
+    overflow-x-auto;
+  }
+
+  .markdown-content table {
+    @apply bg-light-surface-container
+    dark:bg-dark-surface-container
+    block
+    max-w-max
+    overflow-auto
+    rounded-large;
+  }
+  .markdown-content table th {
+    @apply text-title-medium
+    px-4 
+    text-left
+    whitespace-nowrap;
+  }
+
+  .markdown-content table td {
+    @apply text-body-medium
+    py-3
+    px-4
+    border-t
+    border-solid
+    border-light-surface-container-high
+    dark:border-dark-surface-container-high;
+  }
+
+  .markdown-content a {
+    @apply text-light-primary
+    dark:text-dark-primary
+    underline
+    wrap-break-word;
+  }
+
+  .markdown-content .code-block {
+    @apply bg-light-surface-container
+    dark:bg-dark-surface-container
+    rounded-t-medium
+    rounded-b-extra-small
+    mb-2
+    overflow-hidden
+  }
+
+  .markdown-content .code-block * {
+    @apply bg-inherit!
+  }
+
+  /* Sceleton */
+
+  .sceleton {
+    @apply h-4
+    w-full
+    bg-light-surface-container-high
+    dark:bg-dark-surface-container-high
+    my-3
+    rounded-extra-small;
+  }
+}
+
+/* 
+  UTILS
+*/
+
+@layer utilities {
+  .img-box {
+    @apply bg-light-surface-container-highest
+    dark:bg-dark-surface-container-highest
+    overflow-hidden;
+  }
+
+  .img-cover {
+    @apply w-full
+    h-full
+    object-cover;
+  }
+
+  .material-symbols-rounded {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+    @apply w-[1em]
+    min-w-[1em]
+    h-[1em]
+    min-h-[1em]
+    overflow-hidden;
+  }
+
+  .icon-small {
+    @apply text-[18px]!;
+  }
+}

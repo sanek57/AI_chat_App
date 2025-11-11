@@ -1,5 +1,112 @@
+//components
+import { Greetings } from './pages/Greetings'
+import { PageTitle } from './components/PageTitle'
+import { Sidebar } from './components/Sidebar'
+import { TopAppBar } from './components/TopAppBar'
+
+// node modules
+import { motion } from 'motion/react'
+
+// hooks
+import { useToggle } from './hooks/useToggle'
+import { PromptField } from './components/PromptField'
+import { Outlet, useActionData, useNavigation, useParams } from 'react-router'
+import { useSnackbar } from './hooks/useSnackbar'
+import { useEffect, useRef } from 'react'
+import { usePromtPreloader } from './hooks/usePropmtPreload'
+
 function App() {
-  return <>working</>
+  const params = useParams()
+  const navigation = useNavigation()
+  const actionData = useActionData()
+  const chatHistoryRef = useRef<HTMLDivElement>(null)
+
+  const isNormalLoading = navigation.state === 'loading' && !navigation.formData
+
+  const [isSidebarOpen, toggleSideBar] = useToggle()
+
+  const { propmtPreloadValue } = usePromtPreloader()
+
+  const { showSnackbar } = useSnackbar()
+
+  // scroll to bottom after get ai response
+  useEffect(() => {
+    const chatHistory = chatHistoryRef.current
+    if (propmtPreloadValue) {
+      chatHistory?.scroll({
+        top: chatHistory.scrollHeight - chatHistory.clientHeight,
+        behavior: 'smooth',
+      })
+    }
+  }, [chatHistoryRef, propmtPreloadValue])
+
+  useEffect(() => {
+    if (!actionData) return
+
+    const data = JSON.parse(String(actionData))
+
+    if (data?.conversationTitle) {
+      showSnackbar({
+        message: `Conversation ${data.conversationTitle} deleted. `,
+        type: 'success',
+        timeout: 2500,
+      })
+    }
+  }, [actionData, showSnackbar])
+
+  return (
+    <>
+      {/* meta */}
+      <PageTitle title='MavDeep - chat to supercharge your ides' />
+
+      <div className='lg:grid lg:grid-cols-[320px_1fr]'>
+        <Sidebar isSidebarOpen={isSidebarOpen} toggleSideBar={toggleSideBar} />
+        <div className='h-dvh grid grid-rows-[max-content_minmax(0,1fr)_max-content]'>
+          <TopAppBar toggleSidebar={toggleSideBar} />
+
+          {/* Greetings or child element of router path */}
+          <div
+            ref={chatHistoryRef}
+            className='px-5 pb-5 flex flex-cols overflow-y-auto'
+          >
+            <div className='max-w-[840px] w-full mx-auto grow'>
+              {isNormalLoading ? null : params.chatId ? (
+                <Outlet />
+              ) : (
+                <Greetings />
+              )}
+            </div>
+          </div>
+
+          {/* Prompt field */}
+          <div className='bg-light-background dark:bg-dark-background'>
+            <div className='max-w-[870px] px-5 w-full mx-auto'>
+              <PromptField />
+              <motion.p
+                initial={{ opacity: 0, translateY: '-4px' }}
+                animate={{ opacity: 1, translateY: '0px' }}
+                transition={{ duration: 0.2, delay: 0.8, ease: 'easeOut' }}
+                className='text-body-small text-center 
+                text-light-on-surface-variant
+                dark:text-dark-on-surface-variant
+                p-3'
+              >
+                MavDeep may dispaly inaccurate info, including about people, so
+                double-check is response.
+                <a
+                  href='https://support.google.com/gemini?p=privacy_notice'
+                  className='inline underline ms-1'
+                  target='_blank'
+                >
+                  Your privacy & Gemeni Apps
+                </a>
+              </motion.p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default App
