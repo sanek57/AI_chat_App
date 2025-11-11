@@ -1,7 +1,7 @@
 // node modules
 import { motion, type Variants } from 'motion/react'
 import { useCallback, useRef, useState } from 'react'
-import { useNavigation, useSubmit } from 'react-router'
+import { useNavigation, useParams, useSubmit } from 'react-router'
 
 // components
 import { IconButton } from './Button'
@@ -37,6 +37,8 @@ export const PromptField = () => {
   const submit = useSubmit()
   // nav for checking state
   const navigation = useNavigation()
+
+  const { chatId } = useParams()
 
   const [placeholderShow, setPlaceholderShow] = useState<boolean>(true)
   const [isMultiline, setMultiline] = useState<boolean>(false)
@@ -92,7 +94,7 @@ export const PromptField = () => {
       {
         method: 'POST',
         encType: 'application/x-www-form-urlencoded',
-        action: '/',
+        action: `/${chatId || ''}`,
       }
     )
 
@@ -100,7 +102,7 @@ export const PromptField = () => {
       inputFieldRef.current.innerHTML = ''
       handleInputChange()
     }
-  }, [handleInputChange, inputValue, navigation.state, submit])
+  }, [handleInputChange, inputValue, navigation.state, submit, chatId])
 
   return (
     <motion.div

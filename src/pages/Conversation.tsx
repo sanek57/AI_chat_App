@@ -10,7 +10,6 @@ import type { IChat, IResponseConversation } from '../routes'
 
 // hooks
 import { useLoaderData } from 'react-router'
-import { span } from 'motion/react-client'
 import { AiResponse } from '../components/AiResponse'
 
 export const Conversation = () => {
@@ -24,14 +23,17 @@ export const Conversation = () => {
       <PageTitle title={`Conversation title | Mavdeep`} />
 
       {/* content */}
-      <motion.div className=''>
+      <motion.div
+        className='max-w-[700px] mx-auto will-change-auto!'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.05, ease: 'easeOut' }}
+      >
         {chats &&
           chats.map((chat: IChat) => (
             <div key={chat.user_prompt}>
               <UserPrompt text={chat.user_prompt} />
-              <AiResponse aiResponse={chat.ai_response}>
-                
-              </AiResponse>
+              <AiResponse aiResponse={chat.ai_response}></AiResponse>
             </div>
           ))}
         {!chats && <span>Data not found</span>}

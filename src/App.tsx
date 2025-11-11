@@ -10,10 +10,13 @@ import { motion } from 'motion/react'
 // hooks
 import { useToggle } from './hooks/useToggle'
 import { PromptField } from './components/PromptField'
-import { Outlet, useParams } from 'react-router'
+import { Outlet, useNavigation, useParams } from 'react-router'
 
 function App() {
   const params = useParams()
+  const navigation = useNavigation()
+
+  const isNormalLoading = navigation.state === 'loading' && !navigation.formData
 
   const [isSidebarOpen, toggleSideBar] = useToggle()
 
@@ -30,7 +33,11 @@ function App() {
           {/* Greetings or child element of router path */}
           <div className='px-5 pb-5 flex flex-cols overflow-y-auto'>
             <div className='max-w-[840px] w-full mx-auto grow'>
-              {params.chatId ? <Outlet /> : <Greetings />}
+              {isNormalLoading ? null : params.chatId ? (
+                <Outlet />
+              ) : (
+                <Greetings />
+              )}
             </div>
           </div>
 
