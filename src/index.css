@@ -703,6 +703,17 @@
   .markdown-content .code-block * {
     @apply bg-inherit!
   }
+
+  /* Sceleton */
+
+  .sceleton {
+    @apply h-4
+    w-full
+    bg-light-surface-container-high
+    dark:bg-dark-surface-container-high
+    my-3
+    rounded-extra-small;
+  }
 }
 
 /* 

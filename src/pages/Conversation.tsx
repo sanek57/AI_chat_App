@@ -11,11 +11,15 @@ import type { IChat, IResponseConversation } from '../routes'
 // hooks
 import { useLoaderData } from 'react-router'
 import { AiResponse } from '../components/AiResponse'
+import { PromptPreloader } from '../components/PromptPreloader'
+import { usePromtPreloader } from '../hooks/usePropmtPreload'
 
 export const Conversation = () => {
   const {
     conversation: { chats },
   } = useLoaderData<IResponseConversation>()
+
+  const { propmtPreloadValue } = usePromtPreloader()
 
   return (
     <>
@@ -38,6 +42,8 @@ export const Conversation = () => {
           ))}
         {!chats && <span>Data not found</span>}
       </motion.div>
+
+      {propmtPreloadValue && <PromptPreloader prompt={propmtPreloadValue} />}
     </>
   )
 }
