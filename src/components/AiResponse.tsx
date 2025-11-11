@@ -79,25 +79,27 @@ export const AiResponse: FC<AiResponseProps> = ({ aiResponse, children }) => {
 
       {children}
 
-      <div className='markdown-content'>
-        <Markdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            code: props => {
-              //   console.log(props)
-              return (
-                <CodeBlock
-                  {...props}
-                  theme={codeTheme}
-                  handleCopy={handleCopy}
-                />
-              )
-            },
-          }}
-        >
-          {aiResponse}
-        </Markdown>
-      </div>
+      {aiResponse && (
+        <div className='markdown-content'>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              code: props => {
+                //   console.log(props)
+                return (
+                  <CodeBlock
+                    {...props}
+                    theme={codeTheme}
+                    handleCopy={handleCopy}
+                  />
+                )
+              },
+            }}
+          >
+            {aiResponse}
+          </Markdown>
+        </div>
+      )}
     </div>
   )
 }

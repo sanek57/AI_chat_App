@@ -23,6 +23,10 @@ export const conversationLoader = async ({
     return redirect('/login')
   }
 
+  if (+chatId > 4 || isNaN(+chatId)) {
+    throw new Error('Document with the requested Id not be found.')
+  }
+
   // получаем данные из БД и запихиваем их в data
   data.conversation = {
     id: 1,

@@ -14,7 +14,7 @@ export const resetPasswordLoader = async ({
     await account.get()
     return redirect('/')
   } catch (error) {
-    console.log(`Error getting user session: ${error}`)
+    console.log(`5, Error getting user session: ${error}`)
   }
 
   // если нет активной сесии то перекидываем на страницу сброса пароля

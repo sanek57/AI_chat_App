@@ -8,7 +8,7 @@ export const registerLoader = async (): Promise<Response | null> => {
   try {
     await account.get()
   } catch (error) {
-    console.log(`Error getting user session: ${error}`)
+    console.log(`3, Error getting user session: ${error}`)
 
     return null
   }

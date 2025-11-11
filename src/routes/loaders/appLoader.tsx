@@ -15,7 +15,7 @@ export const appLoader = async (): Promise<
   try {
     data.user = await account.get()
   } catch (error) {
-    console.log(`Error getting user session: ${error}`)
+    console.log(`2, Error getting user session: ${error}`)
 
     return redirect('/login')
   }

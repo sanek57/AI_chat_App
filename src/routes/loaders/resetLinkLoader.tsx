@@ -8,7 +8,7 @@ export const resetLinkLoader = async (): Promise<Response | null> => {
   try {
     await account.get()
   } catch (error) {
-    console.log(`Error getting user session: ${error}`)
+    console.log(`4, Error getting user session: ${error}`)
 
     return null
   }
